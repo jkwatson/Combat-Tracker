@@ -1,0 +1,489 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		523319F1142E44A300BC558C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523319F0142E44A300BC558C /* UIKit.framework */; };
+		523319F3142E44A300BC558C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523319F2142E44A300BC558C /* Foundation.framework */; };
+		523319F5142E44A300BC558C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523319F4142E44A300BC558C /* CoreGraphics.framework */; };
+		523319F7142E44A300BC558C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523319F6142E44A300BC558C /* CoreData.framework */; };
+		523319FD142E44A300BC558C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 523319FB142E44A300BC558C /* InfoPlist.strings */; };
+		523319FF142E44A300BC558C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 523319FE142E44A300BC558C /* main.m */; };
+		52331A03142E44A300BC558C /* CombatTrackerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 52331A02142E44A300BC558C /* CombatTrackerAppDelegate.m */; };
+		52331A06142E44A300BC558C /* CombatTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 52331A04142E44A300BC558C /* CombatTracker.xcdatamodeld */; };
+		52331A09142E44A300BC558C /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52331A07142E44A300BC558C /* MainWindow.xib */; };
+		52331A0C142E44A300BC558C /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52331A0B142E44A300BC558C /* DetailViewController.m */; };
+		52331A0F142E44A300BC558C /* DetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52331A0D142E44A300BC558C /* DetailView.xib */; };
+		52331A12142E44A300BC558C /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52331A11142E44A300BC558C /* RootViewController.m */; };
+		52331A1A142E44A300BC558C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52331A19142E44A300BC558C /* SenTestingKit.framework */; };
+		52331A1B142E44A300BC558C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523319F0142E44A300BC558C /* UIKit.framework */; };
+		52331A1C142E44A300BC558C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523319F2142E44A300BC558C /* Foundation.framework */; };
+		52331A1D142E44A300BC558C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523319F4142E44A300BC558C /* CoreGraphics.framework */; };
+		52331A1E142E44A300BC558C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523319F6142E44A300BC558C /* CoreData.framework */; };
+		52331A26142E44A300BC558C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52331A24142E44A300BC558C /* InfoPlist.strings */; };
+		52331A28142E44A300BC558C /* CombatTrackerTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 52331A27142E44A300BC558C /* CombatTrackerTests.h */; };
+		52331A2A142E44A300BC558C /* CombatTrackerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52331A29142E44A300BC558C /* CombatTrackerTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		52331A1F142E44A300BC558C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 523319E3142E44A300BC558C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 523319EB142E44A300BC558C;
+			remoteInfo = CombatTracker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		523319EC142E44A300BC558C /* CombatTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CombatTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		523319F0142E44A300BC558C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		523319F2142E44A300BC558C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		523319F4142E44A300BC558C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		523319F6142E44A300BC558C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		523319FA142E44A300BC558C /* CombatTracker-Info.plist */ = {isa = PBXFileReference; path = "CombatTracker-Info.plist"; sourceTree = "<group>"; };
+		523319FC142E44A300BC558C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		523319FE142E44A300BC558C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		52331A00142E44A300BC558C /* CombatTracker-Prefix.pch */ = {isa = PBXFileReference; path = "CombatTracker-Prefix.pch"; sourceTree = "<group>"; };
+		52331A01142E44A300BC558C /* CombatTrackerAppDelegate.h */ = {isa = PBXFileReference; path = CombatTrackerAppDelegate.h; sourceTree = "<group>"; };
+		52331A02142E44A300BC558C /* CombatTrackerAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CombatTrackerAppDelegate.m; sourceTree = "<group>"; };
+		52331A05142E44A300BC558C /* CombatTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CombatTracker.xcdatamodel; sourceTree = "<group>"; };
+		52331A08142E44A300BC558C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		52331A0A142E44A300BC558C /* DetailViewController.h */ = {isa = PBXFileReference; path = DetailViewController.h; sourceTree = "<group>"; };
+		52331A0B142E44A300BC558C /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		52331A0E142E44A300BC558C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailView.xib; sourceTree = "<group>"; };
+		52331A10142E44A300BC558C /* RootViewController.h */ = {isa = PBXFileReference; path = RootViewController.h; sourceTree = "<group>"; };
+		52331A11142E44A300BC558C /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		52331A18142E44A300BC558C /* CombatTrackerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CombatTrackerTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		52331A19142E44A300BC558C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		52331A23142E44A300BC558C /* CombatTrackerTests-Info.plist */ = {isa = PBXFileReference; path = "CombatTrackerTests-Info.plist"; sourceTree = "<group>"; };
+		52331A25142E44A300BC558C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		52331A27142E44A300BC558C /* CombatTrackerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CombatTrackerTests.h; sourceTree = "<group>"; };
+		52331A29142E44A300BC558C /* CombatTrackerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CombatTrackerTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		523319E9142E44A300BC558C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				523319F1142E44A300BC558C /* UIKit.framework in Frameworks */,
+				523319F3142E44A300BC558C /* Foundation.framework in Frameworks */,
+				523319F5142E44A300BC558C /* CoreGraphics.framework in Frameworks */,
+				523319F7142E44A300BC558C /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52331A14142E44A300BC558C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52331A1A142E44A300BC558C /* SenTestingKit.framework in Frameworks */,
+				52331A1B142E44A300BC558C /* UIKit.framework in Frameworks */,
+				52331A1C142E44A300BC558C /* Foundation.framework in Frameworks */,
+				52331A1D142E44A300BC558C /* CoreGraphics.framework in Frameworks */,
+				52331A1E142E44A300BC558C /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		523319E1142E44A300BC558C = {
+			isa = PBXGroup;
+			children = (
+				523319F8142E44A300BC558C /* CombatTracker */,
+				52331A21142E44A300BC558C /* CombatTrackerTests */,
+				523319EF142E44A300BC558C /* Frameworks */,
+				523319ED142E44A300BC558C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		523319ED142E44A300BC558C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				523319EC142E44A300BC558C /* CombatTracker.app */,
+				52331A18142E44A300BC558C /* CombatTrackerTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		523319EF142E44A300BC558C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				523319F0142E44A300BC558C /* UIKit.framework */,
+				523319F2142E44A300BC558C /* Foundation.framework */,
+				523319F4142E44A300BC558C /* CoreGraphics.framework */,
+				523319F6142E44A300BC558C /* CoreData.framework */,
+				52331A19142E44A300BC558C /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		523319F8142E44A300BC558C /* CombatTracker */ = {
+			isa = PBXGroup;
+			children = (
+				52331A01142E44A300BC558C /* CombatTrackerAppDelegate.h */,
+				52331A02142E44A300BC558C /* CombatTrackerAppDelegate.m */,
+				52331A07142E44A300BC558C /* MainWindow.xib */,
+				52331A0A142E44A300BC558C /* DetailViewController.h */,
+				52331A0B142E44A300BC558C /* DetailViewController.m */,
+				52331A0D142E44A300BC558C /* DetailView.xib */,
+				52331A10142E44A300BC558C /* RootViewController.h */,
+				52331A11142E44A300BC558C /* RootViewController.m */,
+				52331A04142E44A300BC558C /* CombatTracker.xcdatamodeld */,
+				523319F9142E44A300BC558C /* Supporting Files */,
+			);
+			path = CombatTracker;
+			sourceTree = "<group>";
+		};
+		523319F9142E44A300BC558C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				523319FA142E44A300BC558C /* CombatTracker-Info.plist */,
+				523319FB142E44A300BC558C /* InfoPlist.strings */,
+				523319FE142E44A300BC558C /* main.m */,
+				52331A00142E44A300BC558C /* CombatTracker-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		52331A21142E44A300BC558C /* CombatTrackerTests */ = {
+			isa = PBXGroup;
+			children = (
+				52331A27142E44A300BC558C /* CombatTrackerTests.h */,
+				52331A29142E44A300BC558C /* CombatTrackerTests.m */,
+				52331A22142E44A300BC558C /* Supporting Files */,
+			);
+			path = CombatTrackerTests;
+			sourceTree = "<group>";
+		};
+		52331A22142E44A300BC558C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				52331A23142E44A300BC558C /* CombatTrackerTests-Info.plist */,
+				52331A24142E44A300BC558C /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		523319EB142E44A300BC558C /* CombatTracker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52331A2D142E44A300BC558C /* Build configuration list for PBXNativeTarget "CombatTracker" */;
+			buildPhases = (
+				523319E8142E44A300BC558C /* Sources */,
+				523319E9142E44A300BC558C /* Frameworks */,
+				523319EA142E44A300BC558C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CombatTracker;
+			productName = CombatTracker;
+			productReference = 523319EC142E44A300BC558C /* CombatTracker.app */;
+			productType = "com.apple.product-type.application";
+		};
+		52331A17142E44A300BC558C /* CombatTrackerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52331A30142E44A300BC558C /* Build configuration list for PBXNativeTarget "CombatTrackerTests" */;
+			buildPhases = (
+				52331A13142E44A300BC558C /* Sources */,
+				52331A14142E44A300BC558C /* Frameworks */,
+				52331A15142E44A300BC558C /* Resources */,
+				52331A16142E44A300BC558C /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52331A20142E44A300BC558C /* PBXTargetDependency */,
+			);
+			name = CombatTrackerTests;
+			productName = CombatTrackerTests;
+			productReference = 52331A18142E44A300BC558C /* CombatTrackerTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		523319E3142E44A300BC558C /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 523319E6142E44A300BC558C /* Build configuration list for PBXProject "CombatTracker" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 523319E1142E44A300BC558C;
+			productRefGroup = 523319ED142E44A300BC558C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				523319EB142E44A300BC558C /* CombatTracker */,
+				52331A17142E44A300BC558C /* CombatTrackerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		523319EA142E44A300BC558C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				523319FD142E44A300BC558C /* InfoPlist.strings in Resources */,
+				52331A09142E44A300BC558C /* MainWindow.xib in Resources */,
+				52331A0F142E44A300BC558C /* DetailView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52331A15142E44A300BC558C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52331A26142E44A300BC558C /* InfoPlist.strings in Resources */,
+				52331A28142E44A300BC558C /* CombatTrackerTests.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		52331A16142E44A300BC558C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		523319E8142E44A300BC558C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				523319FF142E44A300BC558C /* main.m in Sources */,
+				52331A03142E44A300BC558C /* CombatTrackerAppDelegate.m in Sources */,
+				52331A06142E44A300BC558C /* CombatTracker.xcdatamodeld in Sources */,
+				52331A0C142E44A300BC558C /* DetailViewController.m in Sources */,
+				52331A12142E44A300BC558C /* RootViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52331A13142E44A300BC558C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52331A2A142E44A300BC558C /* CombatTrackerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		52331A20142E44A300BC558C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 523319EB142E44A300BC558C /* CombatTracker */;
+			targetProxy = 52331A1F142E44A300BC558C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		523319FB142E44A300BC558C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				523319FC142E44A300BC558C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		52331A07142E44A300BC558C /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				52331A08142E44A300BC558C /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		52331A0D142E44A300BC558C /* DetailView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				52331A0E142E44A300BC558C /* en */,
+			);
+			name = DetailView.xib;
+			sourceTree = "<group>";
+		};
+		52331A24142E44A300BC558C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				52331A25142E44A300BC558C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		52331A2B142E44A300BC558C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		52331A2C142E44A300BC558C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		52331A2E142E44A300BC558C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CombatTracker/CombatTracker-Prefix.pch";
+				INFOPLIST_FILE = "CombatTracker/CombatTracker-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		52331A2F142E44A300BC558C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CombatTracker/CombatTracker-Prefix.pch";
+				INFOPLIST_FILE = "CombatTracker/CombatTracker-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		52331A31142E44A300BC558C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CombatTracker.app/CombatTracker";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CombatTracker/CombatTracker-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "CombatTrackerTests/CombatTrackerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		52331A32142E44A300BC558C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CombatTracker.app/CombatTracker";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CombatTracker/CombatTracker-Prefix.pch";
+				INFOPLIST_FILE = "CombatTrackerTests/CombatTrackerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		523319E6142E44A300BC558C /* Build configuration list for PBXProject "CombatTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52331A2B142E44A300BC558C /* Debug */,
+				52331A2C142E44A300BC558C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52331A2D142E44A300BC558C /* Build configuration list for PBXNativeTarget "CombatTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52331A2E142E44A300BC558C /* Debug */,
+				52331A2F142E44A300BC558C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		52331A30142E44A300BC558C /* Build configuration list for PBXNativeTarget "CombatTrackerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52331A31142E44A300BC558C /* Debug */,
+				52331A32142E44A300BC558C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		52331A04142E44A300BC558C /* CombatTracker.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				52331A05142E44A300BC558C /* CombatTracker.xcdatamodel */,
+			);
+			currentVersion = 52331A05142E44A300BC558C /* CombatTracker.xcdatamodel */;
+			path = CombatTracker.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 523319E3142E44A300BC558C /* Project object */;
+}
