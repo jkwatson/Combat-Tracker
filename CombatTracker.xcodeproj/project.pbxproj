@@ -45,22 +45,22 @@
 		523319F2142E44A300BC558C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		523319F4142E44A300BC558C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		523319F6142E44A300BC558C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		523319FA142E44A300BC558C /* CombatTracker-Info.plist */ = {isa = PBXFileReference; path = "CombatTracker-Info.plist"; sourceTree = "<group>"; };
+		523319FA142E44A300BC558C /* CombatTracker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CombatTracker-Info.plist"; sourceTree = "<group>"; };
 		523319FC142E44A300BC558C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		523319FE142E44A300BC558C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		52331A00142E44A300BC558C /* CombatTracker-Prefix.pch */ = {isa = PBXFileReference; path = "CombatTracker-Prefix.pch"; sourceTree = "<group>"; };
-		52331A01142E44A300BC558C /* CombatTrackerAppDelegate.h */ = {isa = PBXFileReference; path = CombatTrackerAppDelegate.h; sourceTree = "<group>"; };
+		52331A00142E44A300BC558C /* CombatTracker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CombatTracker-Prefix.pch"; sourceTree = "<group>"; };
+		52331A01142E44A300BC558C /* CombatTrackerAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CombatTrackerAppDelegate.h; sourceTree = "<group>"; };
 		52331A02142E44A300BC558C /* CombatTrackerAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CombatTrackerAppDelegate.m; sourceTree = "<group>"; };
 		52331A05142E44A300BC558C /* CombatTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CombatTracker.xcdatamodel; sourceTree = "<group>"; };
 		52331A08142E44A300BC558C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		52331A0A142E44A300BC558C /* DetailViewController.h */ = {isa = PBXFileReference; path = DetailViewController.h; sourceTree = "<group>"; };
+		52331A0A142E44A300BC558C /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		52331A0B142E44A300BC558C /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		52331A0E142E44A300BC558C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailView.xib; sourceTree = "<group>"; };
-		52331A10142E44A300BC558C /* RootViewController.h */ = {isa = PBXFileReference; path = RootViewController.h; sourceTree = "<group>"; };
+		52331A10142E44A300BC558C /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		52331A11142E44A300BC558C /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		52331A18142E44A300BC558C /* CombatTrackerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CombatTrackerTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		52331A19142E44A300BC558C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		52331A23142E44A300BC558C /* CombatTrackerTests-Info.plist */ = {isa = PBXFileReference; path = "CombatTrackerTests-Info.plist"; sourceTree = "<group>"; };
+		52331A23142E44A300BC558C /* CombatTrackerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CombatTrackerTests-Info.plist"; sourceTree = "<group>"; };
 		52331A25142E44A300BC558C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		52331A27142E44A300BC558C /* CombatTrackerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CombatTrackerTests.h; sourceTree = "<group>"; };
 		52331A29142E44A300BC558C /* CombatTrackerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CombatTrackerTests.m; sourceTree = "<group>"; };
@@ -461,6 +461,7 @@
 				52331A2F142E44A300BC558C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		52331A30142E44A300BC558C /* Build configuration list for PBXNativeTarget "CombatTrackerTests" */ = {
 			isa = XCConfigurationList;
@@ -469,6 +470,7 @@
 				52331A32142E44A300BC558C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

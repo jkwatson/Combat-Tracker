@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Event">
-        <attribute name="timeStamp" optional="YES" attributeType="Date"/>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="562" systemVersion="11B26" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Combatant">
+        <attribute name="armorClass" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="details" optional="YES" attributeType="String"/>
+        <attribute name="fortitude" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="hp" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="maxHp" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="reflex" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="will" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <relationship name="encounters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Encounter" inverseName="combantants" inverseEntity="Encounter"/>
+        <relationship name="party" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Party" inverseName="members" inverseEntity="Party"/>
+    </entity>
+    <entity name="Encounter">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="combantants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Combatant" inverseName="encounters" inverseEntity="Combatant"/>
+    </entity>
+    <entity name="Party">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Combatant" inverseName="party" inverseEntity="Combatant"/>
     </entity>
     <elements>
-        <element name="Event" positionX="261" positionY="189" width="128" height="60"/>
+        <element name="Combatant" positionX="-522" positionY="-60" width="128" height="210"/>
+        <element name="Party" positionX="9" positionY="18" width="128" height="75"/>
+        <element name="Encounter" positionX="-117" positionY="276" width="128" height="75"/>
     </elements>
 </model>

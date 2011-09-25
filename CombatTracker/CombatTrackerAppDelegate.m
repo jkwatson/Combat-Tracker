@@ -1,11 +1,3 @@
-//
-//  CombatTrackerAppDelegate.m
-//  CombatTracker
-//
-//  Created by John Watson on 9/24/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
-
 #import "CombatTrackerAppDelegate.h"
 
 #import "RootViewController.h"
@@ -150,9 +142,9 @@
     {
         return __persistentStoreCoordinator;
     }
-    
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"CombatTracker.sqlite"];
-    
+//    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
+
     NSError *error = nil;
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error])

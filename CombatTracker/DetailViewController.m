@@ -1,11 +1,3 @@
-//
-//  DetailViewController.m
-//  CombatTracker
-//
-//  Created by John Watson on 9/24/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
-
 #import "DetailViewController.h"
 
 #import "RootViewController.h"
@@ -19,7 +11,7 @@
 
 @synthesize toolbar = _toolbar;
 @synthesize detailItem = _detailItem;
-@synthesize detailDescriptionLabel = _detailDescriptionLabel;
+@synthesize combatantNameField = _combatantNameField;
 @synthesize popoverController = _myPopoverController;
 @synthesize rootViewController = _rootViewController;
 
@@ -46,9 +38,10 @@
 - (void)configureView
 {
     // Update the user interface for the detail item.
+    _combatantNameField.enabled = (self.detailItem != nil);
 
     // Normally should use accessor method, but using KVC here avoids adding a custom class to the template.
-    self.detailDescriptionLabel.text = [[self.detailItem valueForKey:@"timeStamp"] description];
+    _combatantNameField.text = [self.detailItem valueForKey:@"name"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -79,7 +72,7 @@
 
 - (void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController: (UIPopoverController *)pc
 {
-    barButtonItem.title = @"Events";
+    barButtonItem.title = @"Combatants";
     NSMutableArray *items = [[self.toolbar items] mutableCopy];
     [items insertObject:barButtonItem atIndex:0];
     [self.toolbar setItems:items animated:YES];
@@ -129,7 +122,7 @@
     [_myPopoverController release];
     [_toolbar release];
     [_detailItem release];
-    [_detailDescriptionLabel release];
+    [_combatantNameField release];
     [super dealloc];
 }
 
