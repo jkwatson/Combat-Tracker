@@ -1,14 +1,7 @@
-//
-//  RootViewController.h
-//  CombatTracker
-//
-//  Created by John Watson on 9/24/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 
 @class DetailViewController;
+@class Combatant;
 
 #import <CoreData/CoreData.h>
 
@@ -20,5 +13,8 @@
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 - (void)insertNewObject:(id)sender;
+
+- (void)saveCombatant:(Combatant *)combatant;
+
 
 @end

@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="562" systemVersion="11B26" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Combatant">
+    <entity name="Combatant" representedClassName="Combatant">
         <attribute name="armorClass" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="details" optional="YES" attributeType="String"/>
         <attribute name="fortitude" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
-        <attribute name="hp" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="maxHp" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="reflex" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="type" optional="YES" attributeType="String"/>
         <attribute name="will" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
-        <relationship name="encounters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Encounter" inverseName="combantants" inverseEntity="Encounter"/>
+        <relationship name="encounterState" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CombatantState" inverseName="combatant" inverseEntity="CombatantState"/>
         <relationship name="party" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Party" inverseName="members" inverseEntity="Party"/>
     </entity>
-    <entity name="Encounter">
+    <entity name="CombatantState" representedClassName="CombatantState">
+        <attribute name="currentHp" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="inInitiative" optional="YES" attributeType="Boolean"/>
+        <attribute name="initiativeOrder" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <relationship name="combatant" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Combatant" inverseName="encounterState" inverseEntity="Combatant"/>
+        <relationship name="encounter" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Encounter" inverseName="combatantsStates" inverseEntity="Encounter"/>
+    </entity>
+    <entity name="Encounter" representedClassName="Encounter">
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="combantants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Combatant" inverseName="encounters" inverseEntity="Combatant"/>
+        <relationship name="combatantsStates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CombatantState" inverseName="encounter" inverseEntity="CombatantState"/>
     </entity>
     <entity name="Party">
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -23,7 +29,8 @@
     </entity>
     <elements>
         <element name="Combatant" positionX="-522" positionY="-60" width="128" height="210"/>
-        <element name="Party" positionX="9" positionY="18" width="128" height="75"/>
         <element name="Encounter" positionX="-117" positionY="276" width="128" height="75"/>
+        <element name="Party" positionX="9" positionY="18" width="128" height="75"/>
+        <element name="CombatantState" positionX="-470" positionY="252" width="128" height="120"/>
     </elements>
 </model>

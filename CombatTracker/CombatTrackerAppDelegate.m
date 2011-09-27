@@ -3,6 +3,7 @@
 #import "RootViewController.h"
 
 #import "DetailViewController.h"
+#import "EncounterViewController.h"
 
 @implementation CombatTrackerAppDelegate
 
@@ -18,7 +19,7 @@
 {
     // Override point for customization after application launch.
     // Add the split view controller's view to the window and display.
-    self.window.rootViewController = self.splitViewController;
+//    self.window.rootViewController = self.splitViewController;
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -74,7 +75,11 @@
 - (void)awakeFromNib
 {
     // Pass the managed object context to the root view controller.
-    self.rootViewController.managedObjectContext = self.managedObjectContext; 
+//    self.rootViewController.managedObjectContext = self.managedObjectContext;
+
+    EncounterViewController *encounterViewController = [[EncounterViewController alloc] init];
+    encounterViewController.managedObjectContext = self.managedObjectContext;
+    self.window.rootViewController = [encounterViewController autorelease];
 }
 - (void)saveContext
 {

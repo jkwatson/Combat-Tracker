@@ -27,6 +27,12 @@
 		52331A26142E44A300BC558C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52331A24142E44A300BC558C /* InfoPlist.strings */; };
 		52331A28142E44A300BC558C /* CombatTrackerTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 52331A27142E44A300BC558C /* CombatTrackerTests.h */; };
 		52331A2A142E44A300BC558C /* CombatTrackerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52331A29142E44A300BC558C /* CombatTrackerTests.m */; };
+		525D5A45142FCB5E0009B5E5 /* EncounterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525D5A43142FCB5E0009B5E5 /* EncounterViewController.m */; };
+		525D5A46142FCB5E0009B5E5 /* EncounterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 525D5A44142FCB5E0009B5E5 /* EncounterViewController.xib */; };
+		525D5A4A1430231B0009B5E5 /* Combatant.m in Sources */ = {isa = PBXBuildFile; fileRef = 525D5A491430231B0009B5E5 /* Combatant.m */; };
+		525D5A50143023470009B5E5 /* Encounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 525D5A4F143023470009B5E5 /* Encounter.m */; };
+		525D5A61143024440009B5E5 /* CombatantState.m in Sources */ = {isa = PBXBuildFile; fileRef = 525D5A60143024440009B5E5 /* CombatantState.m */; };
+		52A45743142FB48B0039D774 /* Party.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A45742142FB48B0039D774 /* Party.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +70,17 @@
 		52331A25142E44A300BC558C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		52331A27142E44A300BC558C /* CombatTrackerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CombatTrackerTests.h; sourceTree = "<group>"; };
 		52331A29142E44A300BC558C /* CombatTrackerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CombatTrackerTests.m; sourceTree = "<group>"; };
+		525D5A42142FCB5E0009B5E5 /* EncounterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncounterViewController.h; sourceTree = "<group>"; };
+		525D5A43142FCB5E0009B5E5 /* EncounterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EncounterViewController.m; sourceTree = "<group>"; };
+		525D5A44142FCB5E0009B5E5 /* EncounterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EncounterViewController.xib; sourceTree = "<group>"; };
+		525D5A481430231B0009B5E5 /* Combatant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Combatant.h; sourceTree = "<group>"; };
+		525D5A491430231B0009B5E5 /* Combatant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Combatant.m; sourceTree = "<group>"; };
+		525D5A4E143023470009B5E5 /* Encounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Encounter.h; sourceTree = "<group>"; };
+		525D5A4F143023470009B5E5 /* Encounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Encounter.m; sourceTree = "<group>"; };
+		525D5A5F143024440009B5E5 /* CombatantState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CombatantState.h; sourceTree = "<group>"; };
+		525D5A60143024440009B5E5 /* CombatantState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CombatantState.m; sourceTree = "<group>"; };
+		52A45741142FB48B0039D774 /* Party.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Party.h; sourceTree = "<group>"; };
+		52A45742142FB48B0039D774 /* Party.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Party.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +144,10 @@
 		523319F8142E44A300BC558C /* CombatTracker */ = {
 			isa = PBXGroup;
 			children = (
+				525D5A5F143024440009B5E5 /* CombatantState.h */,
+				525D5A60143024440009B5E5 /* CombatantState.m */,
+				525D5A4E143023470009B5E5 /* Encounter.h */,
+				525D5A4F143023470009B5E5 /* Encounter.m */,
 				52331A01142E44A300BC558C /* CombatTrackerAppDelegate.h */,
 				52331A02142E44A300BC558C /* CombatTrackerAppDelegate.m */,
 				52331A07142E44A300BC558C /* MainWindow.xib */,
@@ -136,7 +157,14 @@
 				52331A10142E44A300BC558C /* RootViewController.h */,
 				52331A11142E44A300BC558C /* RootViewController.m */,
 				52331A04142E44A300BC558C /* CombatTracker.xcdatamodeld */,
+				525D5A481430231B0009B5E5 /* Combatant.h */,
+				525D5A491430231B0009B5E5 /* Combatant.m */,
+				52A45741142FB48B0039D774 /* Party.h */,
+				52A45742142FB48B0039D774 /* Party.m */,
 				523319F9142E44A300BC558C /* Supporting Files */,
+				525D5A42142FCB5E0009B5E5 /* EncounterViewController.h */,
+				525D5A43142FCB5E0009B5E5 /* EncounterViewController.m */,
+				525D5A44142FCB5E0009B5E5 /* EncounterViewController.xib */,
 			);
 			path = CombatTracker;
 			sourceTree = "<group>";
@@ -241,6 +269,7 @@
 				523319FD142E44A300BC558C /* InfoPlist.strings in Resources */,
 				52331A09142E44A300BC558C /* MainWindow.xib in Resources */,
 				52331A0F142E44A300BC558C /* DetailView.xib in Resources */,
+				525D5A46142FCB5E0009B5E5 /* EncounterViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +310,11 @@
 				52331A06142E44A300BC558C /* CombatTracker.xcdatamodeld in Sources */,
 				52331A0C142E44A300BC558C /* DetailViewController.m in Sources */,
 				52331A12142E44A300BC558C /* RootViewController.m in Sources */,
+				52A45743142FB48B0039D774 /* Party.m in Sources */,
+				525D5A45142FCB5E0009B5E5 /* EncounterViewController.m in Sources */,
+				525D5A4A1430231B0009B5E5 /* Combatant.m in Sources */,
+				525D5A50143023470009B5E5 /* Encounter.m in Sources */,
+				525D5A61143024440009B5E5 /* CombatantState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

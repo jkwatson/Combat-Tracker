@@ -1,6 +1,7 @@
 #import "DetailViewController.h"
 
 #import "RootViewController.h"
+#import "Combatant.h"
 
 @interface DetailViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -10,7 +11,7 @@
 @implementation DetailViewController
 
 @synthesize toolbar = _toolbar;
-@synthesize detailItem = _detailItem;
+@synthesize combatant = _combatant;
 @synthesize combatantNameField = _combatantNameField;
 @synthesize popoverController = _myPopoverController;
 @synthesize rootViewController = _rootViewController;
@@ -20,11 +21,11 @@
 /*
  When setting the detail item, update the view and dismiss the popover controller if it's showing.
  */
-- (void)setDetailItem:(NSManagedObject *)managedObject
+- (void)setCombatant:(Combatant *)managedObject
 {
-	if (_detailItem != managedObject) {
-		[_detailItem release];
-		_detailItem = [managedObject retain];
+	if (_combatant != managedObject) {
+		[_combatant release];
+		_combatant = [managedObject retain];
 		
         // Update the view.
         [self configureView];
@@ -38,10 +39,10 @@
 - (void)configureView
 {
     // Update the user interface for the detail item.
-    _combatantNameField.enabled = (self.detailItem != nil);
+    _combatantNameField.enabled = (self.combatant != nil);
 
     // Normally should use accessor method, but using KVC here avoids adding a custom class to the template.
-    _combatantNameField.text = [self.detailItem valueForKey:@"name"];
+    _combatantNameField.text = self.combatant.name;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -121,7 +122,7 @@
 {
     [_myPopoverController release];
     [_toolbar release];
-    [_detailItem release];
+    [_combatant release];
     [_combatantNameField release];
     [super dealloc];
 }
@@ -132,5 +133,11 @@
 {
 	[self.rootViewController insertNewObject:sender];	
 }
+
+- (IBAction)nameEditingComplete:(id)sender {
+    self.combatant.name = [sender text];
+    [self.rootViewController saveCombatant:self.combatant];
+}
+
 
 @end

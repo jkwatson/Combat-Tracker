@@ -1,6 +1,8 @@
 #import "RootViewController.h"
 
 #import "DetailViewController.h"
+#import "Combatant.h"
+#import "Combatant.h"
 
 @interface RootViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -120,8 +122,8 @@
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Set the detail item in the detail view controller.
-    NSManagedObject *selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-    detailViewController.detailItem = selectedObject;    
+    Combatant *selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+    detailViewController.combatant = selectedObject;
 }
 
 - (void)didReceiveMemoryWarning
@@ -148,8 +150,8 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *managedObject = [fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[managedObject valueForKey:@"name"] description];
+    Combatant *selectedCombatant = [fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = selectedCombatant.name;
 }
 
 - (void)insertNewObject:(id)sender
@@ -162,11 +164,9 @@
     // Create a new instance of the entity managed by the fetched results controller.
     NSManagedObjectContext *context = [fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    Combatant *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
     
     // If appropriate, configure the new managed object.
-    [newManagedObject setValue:@"Combatant Name" forKey:@"name"];
-    
     // Save the context.
     NSError *error = nil;
     if (![context save:&error]) {
@@ -181,7 +181,19 @@
     
     NSIndexPath *insertionPath = [fetchedResultsController indexPathForObject:newManagedObject];
     [self.tableView selectRowAtIndexPath:insertionPath animated:YES scrollPosition:UITableViewScrollPositionTop];
-    detailViewController.detailItem = newManagedObject;
+    detailViewController.combatant = newManagedObject;
+}
+
+
+- (void)saveCombatant:(Combatant *)combatant {
+    NSError *error = nil;
+    NSManagedObjectContext *context = [fetchedResultsController managedObjectContext];
+    if (![context save:&error]) {
+        NSLog(@"Error while saving! %@, %@", error, [error userInfo]);
+        //TODO definitely clean this up, as above!
+        abort();
+    }
+    detailViewController.combatant = combatant;
 }
 
 #pragma mark - Fetched results controller
