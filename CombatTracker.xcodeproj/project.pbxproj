@@ -32,6 +32,8 @@
 		525D5A4A1430231B0009B5E5 /* Combatant.m in Sources */ = {isa = PBXBuildFile; fileRef = 525D5A491430231B0009B5E5 /* Combatant.m */; };
 		525D5A50143023470009B5E5 /* Encounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 525D5A4F143023470009B5E5 /* Encounter.m */; };
 		525D5A61143024440009B5E5 /* CombatantState.m in Sources */ = {isa = PBXBuildFile; fileRef = 525D5A60143024440009B5E5 /* CombatantState.m */; };
+		525D5A87143196CC0009B5E5 /* CombatantStateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 525D5A85143196CC0009B5E5 /* CombatantStateTableViewCell.m */; };
+		525D5A88143196CC0009B5E5 /* CombatantStateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 525D5A86143196CC0009B5E5 /* CombatantStateTableViewCell.xib */; };
 		52A45743142FB48B0039D774 /* Party.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A45742142FB48B0039D774 /* Party.m */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +81,9 @@
 		525D5A4F143023470009B5E5 /* Encounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Encounter.m; sourceTree = "<group>"; };
 		525D5A5F143024440009B5E5 /* CombatantState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CombatantState.h; sourceTree = "<group>"; };
 		525D5A60143024440009B5E5 /* CombatantState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CombatantState.m; sourceTree = "<group>"; };
+		525D5A84143196CC0009B5E5 /* CombatantStateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CombatantStateTableViewCell.h; sourceTree = "<group>"; };
+		525D5A85143196CC0009B5E5 /* CombatantStateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CombatantStateTableViewCell.m; sourceTree = "<group>"; };
+		525D5A86143196CC0009B5E5 /* CombatantStateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CombatantStateTableViewCell.xib; sourceTree = "<group>"; };
 		52A45741142FB48B0039D774 /* Party.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Party.h; sourceTree = "<group>"; };
 		52A45742142FB48B0039D774 /* Party.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Party.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -165,6 +170,9 @@
 				525D5A42142FCB5E0009B5E5 /* EncounterViewController.h */,
 				525D5A43142FCB5E0009B5E5 /* EncounterViewController.m */,
 				525D5A44142FCB5E0009B5E5 /* EncounterViewController.xib */,
+				525D5A84143196CC0009B5E5 /* CombatantStateTableViewCell.h */,
+				525D5A85143196CC0009B5E5 /* CombatantStateTableViewCell.m */,
+				525D5A86143196CC0009B5E5 /* CombatantStateTableViewCell.xib */,
 			);
 			path = CombatTracker;
 			sourceTree = "<group>";
@@ -270,6 +278,7 @@
 				52331A09142E44A300BC558C /* MainWindow.xib in Resources */,
 				52331A0F142E44A300BC558C /* DetailView.xib in Resources */,
 				525D5A46142FCB5E0009B5E5 /* EncounterViewController.xib in Resources */,
+				525D5A88143196CC0009B5E5 /* CombatantStateTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +324,7 @@
 				525D5A4A1430231B0009B5E5 /* Combatant.m in Sources */,
 				525D5A50143023470009B5E5 /* Encounter.m in Sources */,
 				525D5A61143024440009B5E5 /* CombatantState.m in Sources */,
+				525D5A87143196CC0009B5E5 /* CombatantStateTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

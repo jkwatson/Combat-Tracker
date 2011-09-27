@@ -288,10 +288,10 @@
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)inTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [inTableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
@@ -316,12 +316,12 @@
 }
 
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+- (BOOL)tableView:(UITableView *)inTableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
 
 // Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)inTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         CombatantState *deletedGuy;
         if (indexPath.section == 0) {
@@ -332,7 +332,7 @@
             deletedGuy = [self.inActiveCombatants objectAtIndex:indexPath.row];
             [self.inActiveCombatants removeObjectAtIndex:indexPath.row];
         }
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [inTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self.managedObjectContext deleteObject:deletedGuy];
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -341,13 +341,11 @@
     [self persistState];
 }
 
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-    NSLog(@"%s %@ %@", _cmd, fromIndexPath, toIndexPath);
+- (void)tableView:(UITableView *)inTableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+//    NSLog(@"%s %@ %@", _cmd, fromIndexPath, toIndexPath);
     CombatantState *combatantState;
     NSUInteger fromSection = fromIndexPath.section;
-    NSUInteger fromRow = fromIndexPath.row;
     NSUInteger toSection = toIndexPath.section;
-    NSUInteger toRow = toIndexPath.row;
 
     if (fromSection == 0) {
         combatantState = [self.activeCombatants objectAtIndex:fromIndexPath.row];
@@ -368,14 +366,14 @@
     [self persistState];
 }
 
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+- (BOOL)tableView:(UITableView *)inTableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
 
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)inTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
