@@ -11,8 +11,6 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
-CGRect IASKCGRectSwap(CGRect rect);
-
 @implementation EncounterViewController
 
 @synthesize fetchedResultsController;
@@ -21,7 +19,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 @synthesize activeCombatants;
 @synthesize inActiveCombatants;
 @synthesize currentFirstResponder;
-@synthesize cellNibCache=_cellNibCache;
+@synthesize cellNibCache;
 
 
 - (id)init {
@@ -39,13 +37,10 @@ CGRect IASKCGRectSwap(CGRect rect);
 }
 
 - (id)cellNibCache {
-    if (!_cellNibCache) {
-        Class cls = NSClassFromString(@"UINib");
-        if ([cls respondsToSelector:@selector(nibWithNibName:bundle:)]) {
-            _cellNibCache = [[cls nibWithNibName:@"CombatantStateTableViewCell" bundle:[NSBundle mainBundle]] retain];
-        }
+    if (!cellNibCache) {
+        cellNibCache = [[UINib nibWithNibName:@"CombatantStateTableViewCell" bundle:[NSBundle mainBundle]] retain];
     }
-    return _cellNibCache;
+    return cellNibCache;
 }
 
 #pragma mark - View lifecycle
@@ -67,7 +62,7 @@ CGRect IASKCGRectSwap(CGRect rect);
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    _cellNibCache = nil;
+    cellNibCache = nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -324,7 +319,7 @@ CGRect IASKCGRectSwap(CGRect rect);
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)inTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 80;
 }
 
@@ -429,6 +424,7 @@ CGRect IASKCGRectSwap(CGRect rect);
     [activeCombatants release];
     [inActiveCombatants release];
     [currentFirstResponder release];
+    [cellNibCache release];
     [super dealloc];
 }
 
