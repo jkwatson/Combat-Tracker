@@ -1,14 +1,5 @@
-//
-//  Combatant.h
-//  CombatTracker
-//
-//  Created by John Watson on 9/25/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
 
 @interface Combatant : NSManagedObject {
 @private

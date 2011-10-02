@@ -1,14 +1,17 @@
 #import "EncounterViewController.h"
 #import "CombatantState.h"
 #import "Combatant.h"
+#import "CombatantStateTableViewCell.h"
 
 @interface EncounterViewController ()
-- (CombatantState *)createCombatantWithName:(NSString *)name active:(BOOL)active;
+- (CombatantState *)createCombatantWithState:(BOOL)active;
 
 - (void)refreshLocalData;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
+
+CGRect IASKCGRectSwap(CGRect rect);
 
 @implementation EncounterViewController
 
@@ -17,6 +20,9 @@
 @synthesize tableView;
 @synthesize activeCombatants;
 @synthesize inActiveCombatants;
+@synthesize currentFirstResponder;
+@synthesize cellNibCache=_cellNibCache;
+
 
 - (id)init {
     self = [super init];
@@ -30,6 +36,16 @@
     [super didReceiveMemoryWarning];
 
     // Release any cached data, images, etc that aren't in use.
+}
+
+- (id)cellNibCache {
+    if (!_cellNibCache) {
+        Class cls = NSClassFromString(@"UINib");
+        if ([cls respondsToSelector:@selector(nibWithNibName:bundle:)]) {
+            _cellNibCache = [[cls nibWithNibName:@"CombatantStateTableViewCell" bundle:[NSBundle mainBundle]] retain];
+        }
+    }
+    return _cellNibCache;
 }
 
 #pragma mark - View lifecycle
@@ -51,10 +67,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+    _cellNibCache = nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -87,7 +100,7 @@
 }
 
 - (IBAction)addNewCombatant:(id)sender {
-    CombatantState *newCombatantState = [self createCombatantWithName:@"New Guy" active:NO];
+    CombatantState *newCombatantState = [self createCombatantWithState:NO];
     [self.inActiveCombatants addObject:newCombatantState];
     [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:self.inActiveCombatants.count - 1 inSection:1]] withRowAnimation:UITableViewRowAnimationLeft];
     [self persistState];
@@ -103,16 +116,16 @@
     [self.activeCombatants addObject:firstGuy];
     [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:self.activeCombatants.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
     [self persistState];
+
 }
 
 #pragma mark - Fetched results controller
 
-- (CombatantState *)createCombatantWithName:(NSString *)name active:(BOOL)active {
+- (CombatantState *)createCombatantWithState:(BOOL)active {
     NSEntityDescription *combatantEntity = [NSEntityDescription entityForName:@"Combatant" inManagedObjectContext:managedObjectContext];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"CombatantState" inManagedObjectContext:managedObjectContext];
     CombatantState *combatantState = [[[CombatantState alloc] initWithEntity:entity insertIntoManagedObjectContext:self.managedObjectContext] autorelease];
     Combatant *combatant = [[Combatant alloc] initWithEntity:combatantEntity insertIntoManagedObjectContext:self.managedObjectContext];
-    combatant.name = name;
     combatantState.combatant = [combatant autorelease];
     combatantState.inInitiative = [NSNumber numberWithBool:active];
     if (active) {
@@ -130,8 +143,8 @@
 
 - (void)initializeEncounter {
 //    NSLog(@"creating new Encounter...");
-    [self.activeCombatants addObject:[self createCombatantWithName:@"New" active:YES]];
-    [self.activeCombatants addObject:[self createCombatantWithName:@"Another" active:NO]];
+    [self.activeCombatants addObject:[self createCombatantWithState:YES]];
+    [self.activeCombatants addObject:[self createCombatantWithState:NO]];
     [self persistState];
 }
 
@@ -258,11 +271,12 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)inTableView {
     return 2;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+- (NSString *)tableView:(UITableView *)inTableView titleForHeaderInSection:(NSInteger)section {
 //    NSLog(@"%s : %li", _cmd, section);
 
     if (section == 0) {
@@ -273,7 +287,7 @@
     }
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)inTableView numberOfRowsInSection:(NSInteger)section {
 //    NSLog(@"%s: %li", _cmd, section);
 
     if (section == 0) {
@@ -289,11 +303,19 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)inTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"CombatantStateCell";
 
     UITableViewCell *cell = [inTableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        UIViewController *temporaryController = [[UIViewController alloc] init];
+        [[self cellNibCache] instantiateWithOwner:temporaryController options:nil];
+        
+//        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+  //      UIViewController *temporaryController = [[UIViewController alloc] initWithNibName:@"CombatantStateTableViewCell" bundle:nil];
+        // Grab a pointer to the custom cell.
+        cell = (CombatantStateTableViewCell *) temporaryController.view;
+        // Release the temporary UIViewController.
+        [temporaryController release];
     }
 
     // Configure the cell...
@@ -302,9 +324,12 @@
     return cell;
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-//    NSLog(@"%s : %@", _cmd, indexPath);
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 80;
+}
 
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     CombatantState *combatantState;
     if (indexPath.section == 0) {
         combatantState = [self.activeCombatants objectAtIndex:indexPath.row];
@@ -312,7 +337,20 @@
     else {
         combatantState = [self.inActiveCombatants objectAtIndex:indexPath.row];
     }
-    cell.textLabel.text = combatantState.combatant.name;
+    CombatantStateTableViewCell *combatantCell = (CombatantStateTableViewCell*) cell;
+    combatantCell.nameField.text = combatantState.combatant.name;
+    combatantCell.acField.text = [combatantState.combatant.armorClass stringValue];
+    combatantCell.reflexField.text = [combatantState.combatant.reflex stringValue];
+    combatantCell.willField.text = [combatantState.combatant.will stringValue];
+    combatantCell.fortField.text = [combatantState.combatant.fortitude stringValue];
+    combatantCell.hpField.text = [combatantState.currentHp stringValue];
+    combatantCell.maxHpField.text = [combatantState.combatant.maxHp stringValue];
+    combatantCell.hpSlider.maximumValue = combatantState.combatant.maxHp.intValue;
+    combatantCell.hpSlider.value = combatantState.currentHp.intValue;
+    combatantCell.combatantState = combatantState;
+    [combatantCell setHpBackgroundColor];
+
+    combatantCell.encounterViewController = self;
 }
 
 
@@ -390,7 +428,9 @@
     [tableView release];
     [activeCombatants release];
     [inActiveCombatants release];
+    [currentFirstResponder release];
     [super dealloc];
 }
+
 
 @end

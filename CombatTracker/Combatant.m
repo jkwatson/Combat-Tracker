@@ -1,13 +1,4 @@
-//
-//  Combatant.m
-//  CombatTracker
-//
-//  Created by John Watson on 9/25/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
-//
-
 #import "Combatant.h"
-
 
 @implementation Combatant
 @dynamic armorClass;
