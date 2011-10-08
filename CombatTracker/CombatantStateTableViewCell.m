@@ -83,6 +83,7 @@
     self.combatantState.combatant.maxHp = [NSNumber numberWithInt: maxHp];
     [encounterViewController persistState];
     self.hpSlider.maximumValue = maxHp;
+    [self setHpBackgroundColor];
 }
 
 - (void) setHpBackgroundColor {
@@ -107,7 +108,7 @@
 }
 
 - (IBAction)hpSliderValueChanged:(id)sender {
-    int hp = self.hpSlider.value;
+    int hp = (int) self.hpSlider.value;
     self.combatantState.currentHp = [NSNumber numberWithInt:hp];
     self.hpField.text = [[NSNumber numberWithInt:hp] stringValue];
     [self setHpBackgroundColor];

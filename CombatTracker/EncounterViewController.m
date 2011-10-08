@@ -297,20 +297,137 @@
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)inTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"CombatantStateCell";
+- (void)setTextFieldDefaults:(UITextField *)field {
+    field.font = [UIFont systemFontOfSize:14.0];
+    field.textAlignment = UITextAlignmentCenter;
+    field.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    field.textColor = [UIColor blackColor];
+    field.borderStyle = UITextBorderStyleRoundedRect;
+}
 
-    UITableViewCell *cell = [inTableView dequeueReusableCellWithIdentifier:CellIdentifier];
+- (void)setLabelDefaults:(UILabel *)acLabel {
+    acLabel.font = [UIFont systemFontOfSize:12.0];
+    acLabel.textAlignment = UITextAlignmentCenter;
+//    acLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    acLabel.backgroundColor = [UIColor clearColor];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)inTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellIdentifier = @"CombatantStateCell";
+
+    CombatantStateTableViewCell *cell = (CombatantStateTableViewCell *)[inTableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        UIViewController *temporaryController = [[UIViewController alloc] init];
-        [[self cellNibCache] instantiateWithOwner:temporaryController options:nil];
+//        NSLog(@"creating new cell...");
+//        UIViewController *temporaryController = [[UIViewController alloc] init];
+//        [[self cellNibCache] instantiateWithOwner:temporaryController options:nil];
+
+        //cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+        //UIViewController *temporaryController = [[UIViewController alloc] initWithNibName:@"CombatantStateTableViewCell" bundle:nil];
         
-//        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-  //      UIViewController *temporaryController = [[UIViewController alloc] initWithNibName:@"CombatantStateTableViewCell" bundle:nil];
         // Grab a pointer to the custom cell.
-        cell = (CombatantStateTableViewCell *) temporaryController.view;
+//        cell = (CombatantStateTableViewCell *) temporaryController.view;
+        
         // Release the temporary UIViewController.
-        [temporaryController release];
+//        [temporaryController release];
+        
+        cell = [[[CombatantStateTableViewCell alloc] initWithStyle:UITableViewStyleGrouped reuseIdentifier:cellIdentifier] autorelease];
+
+        UITextField *nameField = [[[UITextField alloc] initWithFrame:CGRectMake(100, 20, 187, 31)] autorelease];
+        nameField.font = [UIFont systemFontOfSize:13.0];
+        nameField.textAlignment = UITextAlignmentLeft;
+        nameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        nameField.textColor = [UIColor blackColor];
+        nameField.placeholder = @"Name";
+        nameField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        nameField.borderStyle = UITextBorderStyleRoundedRect;
+        cell.nameField = nameField;
+        [nameField addTarget:cell action:@selector(nameFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
+        [cell addSubview:nameField];
+
+        UILabel *acLabel = [[[UILabel alloc] initWithFrame:CGRectMake(298, 0, 40, 21)] autorelease];
+        [self setLabelDefaults:acLabel];
+        acLabel.text = @"AC";
+        [cell addSubview:acLabel];
+
+        UITextField *acField = [[[UITextField alloc] initWithFrame:CGRectMake(297, 20, 43, 31)] autorelease];
+        [self setTextFieldDefaults:acField];
+        cell.acField = acField;
+        acField.placeholder = @"AC";
+        [acField addTarget:cell action:@selector(acFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
+        [cell addSubview:acField];
+
+        UILabel *fortLabel = [[[UILabel alloc] initWithFrame:CGRectMake(348, 0, 40, 21)] autorelease];
+        [self setLabelDefaults:fortLabel];
+        fortLabel.text = @"Fort";
+        [cell addSubview:fortLabel];
+
+        UITextField *fortField = [[[UITextField alloc] initWithFrame:CGRectMake(347, 20, 43, 31)] autorelease];
+        [self setTextFieldDefaults:fortField];
+        fortField.placeholder = @"Fort";
+        cell.fortField = fortField;
+        [fortField addTarget:cell action:@selector(fortitudeFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
+        [cell addSubview:fortField];
+
+        UILabel *reflexLabel = [[[UILabel alloc] initWithFrame:CGRectMake(397, 0, 40, 21)] autorelease];
+        [self setLabelDefaults:reflexLabel];
+        reflexLabel.text = @"Ref";
+        [cell addSubview:reflexLabel];
+
+        UITextField *reflexField = [[[UITextField alloc] initWithFrame:CGRectMake(397, 20, 43, 31)] autorelease];
+        [self setTextFieldDefaults:reflexField];
+        reflexField.placeholder = @"Ref";
+        cell.reflexField = reflexField;
+        [reflexField addTarget:cell action:@selector(reflexFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
+        [cell addSubview:reflexField];
+
+        UILabel *willLabel = [[[UILabel alloc] initWithFrame:CGRectMake(447, 0, 40, 21)] autorelease];
+        [self setLabelDefaults:willLabel];
+        willLabel.text = @"Will";
+        [cell addSubview:willLabel];
+
+        UITextField *willField = [[[UITextField alloc] initWithFrame:CGRectMake(447, 20, 43, 31)] autorelease];
+        [self setTextFieldDefaults:willField];
+        willField.placeholder = @"Will";
+        cell.willField = willField;
+        [willField addTarget:cell action:@selector(willFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
+        [cell addSubview:willField];
+
+        UILabel *hpLabel = [[[UILabel alloc] initWithFrame:CGRectMake(135, 0, 40, 21)] autorelease];
+        [self setLabelDefaults:hpLabel];
+        hpLabel.text = @"HP";
+        hpLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        [cell addSubview:hpLabel];
+
+        UITextField *hpField = [[[UITextField alloc] initWithFrame:CGRectMake(135, 20, 43, 31)] autorelease];
+        [self setTextFieldDefaults:hpField];
+        hpField.placeholder = @"HP";
+        hpField.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        hpField.borderStyle = UITextBorderStyleNone;
+        cell.hpField = hpField;
+        [hpField addTarget:cell action:@selector(hpChanged:) forControlEvents:UIControlEventEditingDidEnd];
+        [cell addSubview:hpField];
+
+        UILabel *maxHpLabel = [[[UILabel alloc] initWithFrame:CGRectMake(178, 0, 60, 21)] autorelease];
+        [self setLabelDefaults:maxHpLabel];
+        maxHpLabel.text = @"Max HP";
+        maxHpLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        [cell addSubview:maxHpLabel];
+
+        UITextField *maxHpField = [[[UITextField alloc] initWithFrame:CGRectMake(186, 20, 43, 31)] autorelease];
+        [self setTextFieldDefaults:maxHpField];
+        maxHpField.placeholder = @"Max";
+        maxHpField.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        cell.maxHpField = maxHpField;
+        [maxHpField addTarget:cell action:@selector(maxHpChanged:) forControlEvents:UIControlEventEditingDidEnd];
+        [cell addSubview:maxHpField];
+
+        MNEValueTrackingSlider* hpSlider = [[[MNEValueTrackingSlider alloc] initWithFrame:CGRectMake(100, 50, 135, 30)] autorelease];
+        cell.hpSlider = hpSlider;
+        hpSlider.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        hpSlider.continuous = NO;
+        [hpSlider addTarget:cell action:@selector(hpSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+        [cell addSubview:hpSlider];
+
     }
 
     // Configure the cell...
@@ -319,9 +436,9 @@
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)inTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
-}
+//- (CGFloat)tableView:(UITableView *)inTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return 80;
+//}
 
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
