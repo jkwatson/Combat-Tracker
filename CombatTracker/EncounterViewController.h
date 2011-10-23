@@ -3,14 +3,14 @@
 @interface EncounterViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate> {
 @private
 }
-@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain) NSMutableArray *activeCombatants;
-@property (nonatomic, retain) NSMutableArray *inActiveCombatants;
-@property (nonatomic, retain) IBOutlet UITableView *tableView;
-@property (nonatomic, retain) UINib* cellNibCache;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSMutableArray *activeCombatants;
+@property (nonatomic, strong) NSMutableArray *inActiveCombatants;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) UINib* cellNibCache;
 
-@property(nonatomic, retain) UITextField *currentFirstResponder;
+@property(nonatomic, strong) UITextField *currentFirstResponder;
 
 - (void)persistState;
 

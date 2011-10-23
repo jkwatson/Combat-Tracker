@@ -7,13 +7,13 @@
 
 @interface DetailViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate>
 
-@property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
+@property (nonatomic, strong) IBOutlet UIToolbar *toolbar;
 
-@property (nonatomic, retain) Combatant *combatant;
+@property (nonatomic, strong) Combatant *combatant;
 
-@property (nonatomic, retain) IBOutlet UITextField *combatantNameField;
+@property (nonatomic, strong) IBOutlet UITextField *combatantNameField;
 
-@property (nonatomic, assign) IBOutlet RootViewController *rootViewController;
+@property (nonatomic, unsafe_unretained) IBOutlet RootViewController *rootViewController;
 
 - (IBAction)insertNewObject:(id)sender;
 

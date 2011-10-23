@@ -38,7 +38,7 @@
 
 - (id)cellNibCache {
     if (!cellNibCache) {
-        cellNibCache = [[UINib nibWithNibName:@"CombatantStateTableViewCell" bundle:[NSBundle mainBundle]] retain];
+        cellNibCache = [UINib nibWithNibName:@"CombatantStateTableViewCell" bundle:[NSBundle mainBundle]];
     }
     return cellNibCache;
 }
@@ -119,9 +119,9 @@
 - (CombatantState *)createCombatantWithState:(BOOL)active {
     NSEntityDescription *combatantEntity = [NSEntityDescription entityForName:@"Combatant" inManagedObjectContext:managedObjectContext];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"CombatantState" inManagedObjectContext:managedObjectContext];
-    CombatantState *combatantState = [[[CombatantState alloc] initWithEntity:entity insertIntoManagedObjectContext:self.managedObjectContext] autorelease];
+    CombatantState *combatantState = [[CombatantState alloc] initWithEntity:entity insertIntoManagedObjectContext:self.managedObjectContext];
     Combatant *combatant = [[Combatant alloc] initWithEntity:combatantEntity insertIntoManagedObjectContext:self.managedObjectContext];
-    combatantState.combatant = [combatant autorelease];
+    combatantState.combatant = combatant;
     combatantState.inInitiative = [NSNumber numberWithBool:active];
     if (active) {
         combatantState.initiativeOrder = [NSNumber numberWithInt:[self tableView:self.tableView numberOfRowsInSection:1]];
@@ -200,11 +200,6 @@
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
 
-    [aFetchedResultsController release];
-    [fetchRequest release];
-    [sortDescriptor release];
-    [activeSortDescriptor release];
-    [sortDescriptors release];
 
     [self refreshLocalData];
 
@@ -297,19 +292,22 @@
     }
 }
 
-- (void)setTextFieldDefaults:(UITextField *)field {
-    field.font = [UIFont systemFontOfSize:14.0];
+- (void)setTextFieldDefaults:(UITextField *)field forCell:(CombatantStateTableViewCell *) cell {
+    field.font = [UIFont systemFontOfSize:16.0];
     field.textAlignment = UITextAlignmentCenter;
     field.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     field.textColor = [UIColor blackColor];
+    field.delegate = cell;
+    field.opaque = YES;
     field.borderStyle = UITextBorderStyleRoundedRect;
 }
 
-- (void)setLabelDefaults:(UILabel *)acLabel {
-    acLabel.font = [UIFont systemFontOfSize:12.0];
-    acLabel.textAlignment = UITextAlignmentCenter;
+- (void)setLabelDefaults:(UILabel *)label {
+    label.font = [UIFont systemFontOfSize:12.0];
+    label.textAlignment = UITextAlignmentCenter;
+    label.opaque = YES;
 //    acLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    acLabel.backgroundColor = [UIColor clearColor];
+    label.backgroundColor = [UIColor clearColor];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)inTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -317,7 +315,7 @@
 
     CombatantStateTableViewCell *cell = (CombatantStateTableViewCell *)[inTableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-//        NSLog(@"creating new cell...");
+        NSLog(@"creating new cell...");
 //        UIViewController *temporaryController = [[UIViewController alloc] init];
 //        [[self cellNibCache] instantiateWithOwner:temporaryController options:nil];
 
@@ -330,76 +328,92 @@
         // Release the temporary UIViewController.
 //        [temporaryController release];
         
-        cell = [[[CombatantStateTableViewCell alloc] initWithStyle:UITableViewStyleGrouped reuseIdentifier:cellIdentifier] autorelease];
-
-        UITextField *nameField = [[[UITextField alloc] initWithFrame:CGRectMake(100, 20, 187, 31)] autorelease];
-        nameField.font = [UIFont systemFontOfSize:13.0];
+        cell = [[CombatantStateTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.opaque = YES;
+        
+        UITextField *nameField = [[UITextField alloc] initWithFrame:CGRectMake(100, 20, 250, 31)];
+        nameField.font = [UIFont systemFontOfSize:16.0];
         nameField.textAlignment = UITextAlignmentLeft;
         nameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         nameField.textColor = [UIColor blackColor];
         nameField.placeholder = @"Name";
         nameField.clearButtonMode = UITextFieldViewModeWhileEditing;
         nameField.borderStyle = UITextBorderStyleRoundedRect;
+        nameField.opaque = YES;
         cell.nameField = nameField;
         [nameField addTarget:cell action:@selector(nameFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
         [cell addSubview:nameField];
 
-        UILabel *acLabel = [[[UILabel alloc] initWithFrame:CGRectMake(298, 0, 40, 21)] autorelease];
+        UILabel *acLabel = [[UILabel alloc] initWithFrame:CGRectMake(298 + 63, 0, 40, 21)];
         [self setLabelDefaults:acLabel];
         acLabel.text = @"AC";
         [cell addSubview:acLabel];
 
-        UITextField *acField = [[[UITextField alloc] initWithFrame:CGRectMake(297, 20, 43, 31)] autorelease];
-        [self setTextFieldDefaults:acField];
+        UITextField *acField = [[UITextField alloc] initWithFrame:CGRectMake(297 + 63, 20, 43, 31)];
+        [self setTextFieldDefaults:acField forCell:cell];
         cell.acField = acField;
         acField.placeholder = @"AC";
         [acField addTarget:cell action:@selector(acFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
         [cell addSubview:acField];
 
-        UILabel *fortLabel = [[[UILabel alloc] initWithFrame:CGRectMake(348, 0, 40, 21)] autorelease];
+        UILabel *fortLabel = [[UILabel alloc] initWithFrame:CGRectMake(348 + 63, 0, 40, 21)];
         [self setLabelDefaults:fortLabel];
         fortLabel.text = @"Fort";
         [cell addSubview:fortLabel];
 
-        UITextField *fortField = [[[UITextField alloc] initWithFrame:CGRectMake(347, 20, 43, 31)] autorelease];
-        [self setTextFieldDefaults:fortField];
+        UITextField *fortField = [[UITextField alloc] initWithFrame:CGRectMake(347 + 63, 20, 43, 31)];
+        [self setTextFieldDefaults:fortField forCell:cell];
         fortField.placeholder = @"Fort";
         cell.fortField = fortField;
         [fortField addTarget:cell action:@selector(fortitudeFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
         [cell addSubview:fortField];
 
-        UILabel *reflexLabel = [[[UILabel alloc] initWithFrame:CGRectMake(397, 0, 40, 21)] autorelease];
+        UILabel *reflexLabel = [[UILabel alloc] initWithFrame:CGRectMake(397 + 63, 0, 40, 21)];
         [self setLabelDefaults:reflexLabel];
         reflexLabel.text = @"Ref";
         [cell addSubview:reflexLabel];
 
-        UITextField *reflexField = [[[UITextField alloc] initWithFrame:CGRectMake(397, 20, 43, 31)] autorelease];
-        [self setTextFieldDefaults:reflexField];
+        UITextField *reflexField = [[UITextField alloc] initWithFrame:CGRectMake(397 + 63, 20, 43, 31)];
+        [self setTextFieldDefaults:reflexField forCell:cell];
         reflexField.placeholder = @"Ref";
         cell.reflexField = reflexField;
         [reflexField addTarget:cell action:@selector(reflexFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
         [cell addSubview:reflexField];
 
-        UILabel *willLabel = [[[UILabel alloc] initWithFrame:CGRectMake(447, 0, 40, 21)] autorelease];
+        UILabel *willLabel = [[UILabel alloc] initWithFrame:CGRectMake(447 + 63, 0, 40, 21)];
         [self setLabelDefaults:willLabel];
         willLabel.text = @"Will";
         [cell addSubview:willLabel];
 
-        UITextField *willField = [[[UITextField alloc] initWithFrame:CGRectMake(447, 20, 43, 31)] autorelease];
-        [self setTextFieldDefaults:willField];
+        UITextField *willField = [[UITextField alloc] initWithFrame:CGRectMake(447 + 63, 20, 43, 31)];
+        [self setTextFieldDefaults:willField forCell:cell];
         willField.placeholder = @"Will";
         cell.willField = willField;
         [willField addTarget:cell action:@selector(willFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
         [cell addSubview:willField];
 
-        UILabel *hpLabel = [[[UILabel alloc] initWithFrame:CGRectMake(135, 0, 40, 21)] autorelease];
+        UILabel *maxHpLabel = [[UILabel alloc] initWithFrame:CGRectMake(135, 0, 44, 21)];
+        [self setLabelDefaults:maxHpLabel];
+        maxHpLabel.text = @"Max HP";
+        maxHpLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        [cell addSubview:maxHpLabel];
+
+        UITextField *maxHpField = [[UITextField alloc] initWithFrame:CGRectMake(135, 20, 43, 31)];
+        [self setTextFieldDefaults:maxHpField forCell:cell];
+        maxHpField.placeholder = @"Max";
+        maxHpField.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        cell.maxHpField = maxHpField;
+        [maxHpField addTarget:cell action:@selector(maxHpChanged:) forControlEvents:UIControlEventEditingDidEnd];
+        [cell addSubview:maxHpField];
+
+        UILabel *hpLabel = [[UILabel alloc] initWithFrame:CGRectMake(178, 0, 60, 21)];
         [self setLabelDefaults:hpLabel];
         hpLabel.text = @"HP";
         hpLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         [cell addSubview:hpLabel];
 
-        UITextField *hpField = [[[UITextField alloc] initWithFrame:CGRectMake(135, 20, 43, 31)] autorelease];
-        [self setTextFieldDefaults:hpField];
+        UITextField *hpField = [[UITextField alloc] initWithFrame:CGRectMake(186, 20, 43, 31)];
+        [self setTextFieldDefaults:hpField forCell:cell];
         hpField.placeholder = @"HP";
         hpField.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         hpField.borderStyle = UITextBorderStyleNone;
@@ -407,24 +421,11 @@
         [hpField addTarget:cell action:@selector(hpChanged:) forControlEvents:UIControlEventEditingDidEnd];
         [cell addSubview:hpField];
 
-        UILabel *maxHpLabel = [[[UILabel alloc] initWithFrame:CGRectMake(178, 0, 60, 21)] autorelease];
-        [self setLabelDefaults:maxHpLabel];
-        maxHpLabel.text = @"Max HP";
-        maxHpLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-        [cell addSubview:maxHpLabel];
-
-        UITextField *maxHpField = [[[UITextField alloc] initWithFrame:CGRectMake(186, 20, 43, 31)] autorelease];
-        [self setTextFieldDefaults:maxHpField];
-        maxHpField.placeholder = @"Max";
-        maxHpField.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-        cell.maxHpField = maxHpField;
-        [maxHpField addTarget:cell action:@selector(maxHpChanged:) forControlEvents:UIControlEventEditingDidEnd];
-        [cell addSubview:maxHpField];
-
-        MNEValueTrackingSlider* hpSlider = [[[MNEValueTrackingSlider alloc] initWithFrame:CGRectMake(100, 50, 135, 30)] autorelease];
+        MNEValueTrackingSlider* hpSlider = [[MNEValueTrackingSlider alloc] initWithFrame:CGRectMake(100, 50, 135, 30)];
         cell.hpSlider = hpSlider;
         hpSlider.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         hpSlider.continuous = NO;
+        hpSlider.opaque = YES;
         [hpSlider addTarget:cell action:@selector(hpSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
         [cell addSubview:hpSlider];
 
@@ -534,16 +535,6 @@
      */
 }
 
-- (void)dealloc {
-    [fetchedResultsController release];
-    [managedObjectContext release];
-    [tableView release];
-    [activeCombatants release];
-    [inActiveCombatants release];
-    [currentFirstResponder release];
-    [cellNibCache release];
-    [super dealloc];
-}
 
 
 @end

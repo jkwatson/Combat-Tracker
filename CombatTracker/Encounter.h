@@ -6,8 +6,8 @@
 @interface Encounter : NSManagedObject {
 @private
 }
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSSet *combatantsStates;
+@property (nonatomic, strong) NSString * name;
+@property (nonatomic, strong) NSSet *combatantsStates;
 @end
 
 @interface Encounter (CoreDataGeneratedAccessors)

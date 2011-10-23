@@ -4,7 +4,7 @@
 @class CombatantState;
 @class EncounterViewController;
 
-@interface CombatantStateTableViewCell : UITableViewCell<SliderViewDelegate> {
+@interface CombatantStateTableViewCell : UITableViewCell<SliderViewDelegate, UITextFieldDelegate> {
     UITextField *nameField;
     UITextField *acField;
     UITextField *fortField;
@@ -16,17 +16,17 @@
     MNEValueTrackingSlider *hpSlider;
 }
 
-@property (nonatomic, retain) IBOutlet UITextField *nameField;
-@property (nonatomic, retain) IBOutlet UITextField *acField;
-@property (nonatomic, retain) IBOutlet UITextField *fortField;
-@property (nonatomic, retain) IBOutlet UITextField *reflexField;
-@property (nonatomic, retain) IBOutlet UITextField *willField;
-@property (retain, nonatomic) IBOutlet UITextField *hpField;
-@property (retain, nonatomic) IBOutlet UITextField *maxHpField;
+@property (nonatomic, strong) IBOutlet UITextField *nameField;
+@property (nonatomic, strong) IBOutlet UITextField *acField;
+@property (nonatomic, strong) IBOutlet UITextField *fortField;
+@property (nonatomic, strong) IBOutlet UITextField *reflexField;
+@property (nonatomic, strong) IBOutlet UITextField *willField;
+@property (strong, nonatomic) IBOutlet UITextField *hpField;
+@property (strong, nonatomic) IBOutlet UITextField *maxHpField;
 
-@property (nonatomic, retain) CombatantState *combatantState;
-@property (nonatomic, retain) EncounterViewController *encounterViewController;
-@property (nonatomic, retain) IBOutlet MNEValueTrackingSlider *hpSlider;
+@property (nonatomic, strong) CombatantState *combatantState;
+@property (nonatomic, strong) EncounterViewController *encounterViewController;
+@property (nonatomic, strong) IBOutlet MNEValueTrackingSlider *hpSlider;
 
 
 - (IBAction)nameFieldChanged:(id)sender;

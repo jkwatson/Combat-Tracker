@@ -22,7 +22,7 @@ id <SliderViewDelegate> sliderViewDelegate;
 }
 
 @property (nonatomic, readonly) CGRect thumbRect;
-@property (nonatomic, retain) id <SliderViewDelegate> sliderViewDelegate;
+@property (nonatomic, strong) id <SliderViewDelegate> sliderViewDelegate;
 
 @end
 

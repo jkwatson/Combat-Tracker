@@ -6,8 +6,8 @@
 @interface Party : NSManagedObject {
 @private
 }
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSSet *members;
+@property (nonatomic, strong) NSString * name;
+@property (nonatomic, strong) NSSet *members;
 @end
 
 @interface Party (CoreDataGeneratedAccessors)

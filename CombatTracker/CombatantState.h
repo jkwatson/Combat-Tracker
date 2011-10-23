@@ -6,10 +6,10 @@
 @interface CombatantState : NSManagedObject {
 @private
 }
-@property (nonatomic, retain) NSNumber * currentHp;
-@property (nonatomic, retain) NSNumber * inInitiative;
-@property (nonatomic, retain) Combatant *combatant;
-@property (nonatomic, retain) Encounter *encounter;
-@property (nonatomic, retain) NSNumber* initiativeOrder;
+@property (nonatomic, strong) NSNumber * currentHp;
+@property (nonatomic, strong) NSNumber * inInitiative;
+@property (nonatomic, strong) Combatant *combatant;
+@property (nonatomic, strong) Encounter *encounter;
+@property (nonatomic, strong) NSNumber* initiativeOrder;
 
 @end

@@ -4,16 +4,16 @@
 @interface Combatant : NSManagedObject {
 @private
 }
-@property (nonatomic, retain) NSNumber * armorClass;
-@property (nonatomic, retain) NSString * details;
-@property (nonatomic, retain) NSNumber * fortitude;
-@property (nonatomic, retain) NSNumber * maxHp;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSNumber * reflex;
-@property (nonatomic, retain) NSString * type;
-@property (nonatomic, retain) NSNumber * will;
-@property (nonatomic, retain) NSSet *encounterState;
-@property (nonatomic, retain) NSManagedObject *party;
+@property (nonatomic, strong) NSNumber * armorClass;
+@property (nonatomic, strong) NSString * details;
+@property (nonatomic, strong) NSNumber * fortitude;
+@property (nonatomic, strong) NSNumber * maxHp;
+@property (nonatomic, strong) NSString * name;
+@property (nonatomic, strong) NSNumber * reflex;
+@property (nonatomic, strong) NSString * type;
+@property (nonatomic, strong) NSNumber * will;
+@property (nonatomic, strong) NSSet *encounterState;
+@property (nonatomic, strong) NSManagedObject *party;
 @end
 
 @interface Combatant (CoreDataGeneratedAccessors)

@@ -60,17 +60,6 @@
     [self saveContext];
 }
 
-- (void)dealloc
-{
-    [_window release];
-    [__managedObjectContext release];
-    [__managedObjectModel release];
-    [__persistentStoreCoordinator release];
-    [_splitViewController release];
-    [_rootViewController release];
-    [_detailViewController release];
-    [super dealloc];
-}
 
 - (void)awakeFromNib
 {
@@ -79,7 +68,7 @@
 
     EncounterViewController *encounterViewController = [[EncounterViewController alloc] init];
     encounterViewController.managedObjectContext = self.managedObjectContext;
-    self.window.rootViewController = [encounterViewController autorelease];
+    self.window.rootViewController = encounterViewController;
 }
 - (void)saveContext
 {

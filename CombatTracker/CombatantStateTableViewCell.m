@@ -18,7 +18,7 @@
 
 
 - (void) setHpSlider:(MNEValueTrackingSlider *)slider {
-    hpSlider = [slider retain];
+    hpSlider = slider;
     hpSlider.sliderViewDelegate = self;
 }
 
@@ -37,19 +37,9 @@
     return self;
 }
 
-- (void)dealloc {
-    [nameField release];
-    [acField release];
-    [fortField release];
-    [reflexField release];
-    [willField release];
-    [nameFieldChanged release];
-    [combatantState release];
-    [encounterViewController release];
-    [hpField release];
-    [maxHpField release];
-    [hpSlider release];
-    [super dealloc];
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [textField selectAll:textField];
+    [UIMenuController sharedMenuController].menuVisible = NO;
 }
 
 - (IBAction)nameFieldChanged:(id)sender {
