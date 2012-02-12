@@ -10,90 +10,103 @@
 #define _UIKeyboardFrameEndUserInfoKey (&UIKeyboardFrameEndUserInfoKey != NULL ? UIKeyboardFrameEndUserInfoKey : @"UIKeyboardBoundsUserInfoKey")
 
 @interface TPKeyboardAvoidingScrollView ()
-- (UIView*)findFirstResponderBeneathView:(UIView*)view;
+- (UIView *)findFirstResponderBeneathView:(UIView *)view;
+
 - (UIEdgeInsets)contentInsetForKeyboard;
+
 - (CGFloat)idealOffsetForView:(UIView *)view withSpace:(CGFloat)space;
+
 - (CGRect)keyboardRect;
 @end
 
 @implementation TPKeyboardAvoidingScrollView
+@synthesize extraOffset;
+
 
 - (void)setup {
-    if ( CGSizeEqualToSize(self.contentSize, CGSizeZero) ) {
+    _priorInsetSaved = NO;
+    if (CGSizeEqualToSize(self.contentSize, CGSizeZero)) {
         self.contentSize = self.bounds.size;
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
--(id)initWithFrame:(CGRect)frame {
-    if ( !(self = [super initWithFrame:frame]) ) return nil;
+- (id)initWithFrame:(CGRect)frame {
+    if (!(self = [super initWithFrame:frame])) return nil;
     [self setup];
     return self;
 }
 
--(void)awakeFromNib {
+- (void)awakeFromNib {
     [self setup];
+    self.extraOffset = [[self valueForKeyPath:@"extraOffset"] intValue];
 }
 
--(void)dealloc {
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)setFrame:(CGRect)frame {
+- (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
 
     CGSize contentSize = _originalContentSize;
     contentSize.width = MAX(contentSize.width, self.frame.size.width);
     contentSize.height = MAX(contentSize.height, self.frame.size.height);
     [super setContentSize:contentSize];
-    
-    if ( _keyboardVisible ) {
+
+    if (_keyboardVisible) {
         self.contentInset = [self contentInsetForKeyboard];
     }
 }
 
--(void)setContentSize:(CGSize)contentSize {
+- (void)setContentSize:(CGSize)contentSize {
     _originalContentSize = contentSize;
-    
+
     contentSize.width = MAX(contentSize.width, self.frame.size.width);
     contentSize.height = MAX(contentSize.height, self.frame.size.height);
     [super setContentSize:contentSize];
-    
-    if ( _keyboardVisible ) {
+
+    if (_keyboardVisible) {
         self.contentInset = [self contentInsetForKeyboard];
     }
 }
 
-- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [[self findFirstResponderBeneathView:self] resignFirstResponder];
     [super touchesEnded:touches withEvent:event];
-} 
+}
 
-- (void)keyboardWillShow:(NSNotification*)notification {
+- (void)keyboardWillShow:(NSNotification *)notification {
     _keyboardRect = [[[notification userInfo] objectForKey:_UIKeyboardFrameEndUserInfoKey] CGRectValue];
     _keyboardVisible = YES;
-    
+
     UIView *firstResponder = [self findFirstResponderBeneathView:self];
-    if ( !firstResponder ) {
+    if (!firstResponder) {
         // No child view is the first responder - nothing to do here
         return;
     }
-    
-    _priorInset = self.contentInset;
-    
+
+    if (!_priorInsetSaved) {
+        _priorInset = self.contentInset;
+        _priorInsetSaved = YES;
+    }
+
     // Shrink view's inset by the keyboard's height, and scroll to show the text field/view being edited
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
     [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]];
 
     self.contentInset = [self contentInsetForKeyboard];
-    [self setContentOffset:CGPointMake(self.contentOffset.x, [self idealOffsetForView:firstResponder withSpace:[self keyboardRect].origin.y - self.bounds.origin.y]) animated:YES];
+
+    CGFloat space = [self keyboardRect].origin.y - self.bounds.origin.y;
+    CGFloat idealOffset = [self idealOffsetForView:firstResponder withSpace:space];
+    [self setContentOffset:CGPointMake(self.contentOffset.x, idealOffset) animated:YES];
 
     [UIView commitAnimations];
 }
 
-- (void)keyboardWillHide:(NSNotification*)notification {
+- (void)keyboardWillHide:(NSNotification *)notification {
     _keyboardRect = CGRectZero;
     _keyboardVisible = NO;
 
@@ -102,15 +115,17 @@
     [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
     [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]];
     self.contentInset = _priorInset;
+    self.contentOffset = CGPointMake(0, 0);
+    _priorInsetSaved = NO;
     [UIView commitAnimations];
 }
 
-- (UIView*)findFirstResponderBeneathView:(UIView*)view {
+- (UIView *)findFirstResponderBeneathView:(UIView *)view {
     // Search recursively for first responder
-    for ( UIView *childView in view.subviews ) {
-        if ( [childView respondsToSelector:@selector(isFirstResponder)] && [childView isFirstResponder] ) return childView;
+    for (UIView *childView in view.subviews) {
+        if ([childView respondsToSelector:@selector(isFirstResponder)] && [childView isFirstResponder]) return childView;
         UIView *result = [self findFirstResponderBeneathView:childView];
-        if ( result ) return result;
+        if (result) return result;
     }
     return nil;
 }
@@ -118,53 +133,51 @@
 - (UIEdgeInsets)contentInsetForKeyboard {
     UIEdgeInsets newInset = self.contentInset;
     CGRect keyboardRect = [self keyboardRect];
-    newInset.bottom = keyboardRect.size.height - ((keyboardRect.origin.y+keyboardRect.size.height) - (self.bounds.origin.y+self.bounds.size.height));
+    newInset.bottom = keyboardRect.size.height - ((keyboardRect.origin.y + keyboardRect.size.height) - (self.bounds.origin.y + self.bounds.size.height));
     return newInset;
 }
 
--(CGFloat)idealOffsetForView:(UIView *)view withSpace:(CGFloat)space {
-    
+- (CGFloat)idealOffsetForView:(UIView *)view withSpace:(CGFloat)space {
     // Convert the rect to get the view's distance from the top of the scrollView.
     CGRect rect = [view convertRect:view.bounds toView:self];
-    
+
     // Set starting offset to that point
     CGFloat offset = rect.origin.y;
-    
-    
-    if ( self.contentSize.height - offset < space ) {
+
+    if (self.contentSize.height - offset < space) {
         // Scroll to the bottom
         offset = self.contentSize.height - space;
     } else {
-        if ( view.bounds.size.height < space ) {
+        if (view.bounds.size.height < space) {
             // Center vertically if there's room
-            offset -= floor((space-view.bounds.size.height)/2.0);
+            offset -= floor((space - view.bounds.size.height) / 2.0);
         }
-        if ( offset + space > self.contentSize.height ) {
+        if (offset + space > self.contentSize.height) {
             // Clamp to content size
             offset = self.contentSize.height - space;
         }
     }
-    
+    offset -= extraOffset / 2;
     if (offset < 0) offset = 0;
-    
+
     return offset;
 }
 
--(void)adjustOffsetToIdealIfNeeded {
-    
+- (void)adjustOffsetToIdealIfNeeded {
+
     // Only do this if the keyboard is already visible
-    if ( !_keyboardVisible ) return;
-    
+    if (!_keyboardVisible) return;
+
     CGFloat visibleSpace = self.bounds.size.height - self.contentInset.top - self.contentInset.bottom;
-    
-    CGPoint idealOffset = CGPointMake(0, [self idealOffsetForView:[self findFirstResponderBeneathView:self] withSpace:visibleSpace]); 
-    
-    [self setContentOffset:idealOffset animated:YES];                
+
+    CGPoint idealOffset = CGPointMake(0, [self idealOffsetForView:[self findFirstResponderBeneathView:self] withSpace:visibleSpace]);
+
+    [self setContentOffset:idealOffset animated:YES];
 }
 
 - (CGRect)keyboardRect {
     CGRect keyboardRect = [self convertRect:_keyboardRect fromView:nil];
-    if ( keyboardRect.origin.y == 0 ) {
+    if (keyboardRect.origin.y == 0) {
         CGRect screenBounds = [self convertRect:[UIScreen mainScreen].bounds fromView:nil];
         keyboardRect.origin = CGPointMake(0, screenBounds.size.height - keyboardRect.size.height);
     }

@@ -20,6 +20,11 @@
 @synthesize inActiveCombatants;
 @synthesize currentFirstResponder;
 @synthesize cellNibCache;
+@synthesize doneButton;
+@synthesize addCombatantButton;
+@synthesize nextInitiativeButton;
+@synthesize flexibleSpace;
+@synthesize toolBar;
 
 
 - (id)init {
@@ -43,11 +48,37 @@
     return cellNibCache;
 }
 
+- (UIView *)findFirstResponderBeneathView:(UIView *)view {
+    // Search recursively for first responder
+    for (UIView *childView in view.subviews) {
+        if ([childView respondsToSelector:@selector(isFirstResponder)] && [childView isFirstResponder]) return childView;
+        UIView *result = [self findFirstResponderBeneathView:childView];
+        if (result) return result;
+    }
+    return nil;
+}
+
+- (IBAction)doneButtonPressed:(id)sender {
+    UIView *firstResponder = [self findFirstResponderBeneathView:self.tableView];
+    [firstResponder resignFirstResponder];
+}
+
+- (void)keyboardDidShow:(NSNotification *)note {
+    NSMutableArray* items = [NSMutableArray arrayWithObjects:addCombatantButton, nextInitiativeButton, flexibleSpace, doneButton, nil];
+    [toolBar setItems:items];
+}
+- (void)keyboardDidHide:(NSNotification *)note {
+    NSMutableArray* items = [NSMutableArray arrayWithObjects:addCombatantButton, nextInitiativeButton, flexibleSpace, nil];
+    [toolBar setItems:items];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     tableView.delegate = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -55,13 +86,20 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.tableView.editing = YES;
+    [self keyboardDidHide: nil];
+
     [self refreshLocalData];
 }
 
 - (void)viewDidUnload {
+    [self setDoneButton:nil];
+    [self setAddCombatantButton:nil];
+    [self setNextInitiativeButton:nil];
+    [self setFlexibleSpace:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     cellNibCache = nil;
 }
 
@@ -78,8 +116,12 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+        return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+    }
     return YES;
 }
+
 
 - (void)persistState {
     int i = 0;
@@ -114,10 +156,15 @@
 
 }
 
+- (IBAction)textFieldReturn:(id)sender {
+    [sender resignFirstResponder];
+}
+
+
 #pragma mark - Fetched results controller
 
 - (CombatantState *)createCombatantWithState:(BOOL)active {
-    NSEntityDescription *combatantEntity = [NSEntityDescription entityForName:@"Combatant" inManagedObjectContext:managedObjectContext];
+    NSEntityDescription *combatantEntity = [NSEntityDescription entityForName:@"Combatant" inManagedObjectContext:managedObjectContext];[[NSNotificationCenter defaultCenter] removeObserver:self];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"CombatantState" inManagedObjectContext:managedObjectContext];
     CombatantState *combatantState = [[CombatantState alloc] initWithEntity:entity insertIntoManagedObjectContext:self.managedObjectContext];
     Combatant *combatant = [[Combatant alloc] initWithEntity:combatantEntity insertIntoManagedObjectContext:self.managedObjectContext];
@@ -292,7 +339,7 @@
     }
 }
 
-- (void)setTextFieldDefaults:(UITextField *)field forCell:(CombatantStateTableViewCell *) cell {
+- (void)setTextFieldDefaults:(UITextField *)field forCell:(CombatantStateTableViewCell *)cell {
     field.font = [UIFont systemFontOfSize:16.0];
     field.textAlignment = UITextAlignmentCenter;
     field.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -313,121 +360,124 @@
 - (UITableViewCell *)tableView:(UITableView *)inTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"CombatantStateCell";
 
-    CombatantStateTableViewCell *cell = (CombatantStateTableViewCell *)[inTableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    CombatantStateTableViewCell *cell = (CombatantStateTableViewCell *) [inTableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        NSLog(@"creating new cell...");
+
+        if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
 //        UIViewController *temporaryController = [[UIViewController alloc] init];
 //        [[self cellNibCache] instantiateWithOwner:temporaryController options:nil];
+//            cell = [[CombatantStateTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            UIViewController *temporaryController = [[UIViewController alloc] initWithNibName:@"IPhoneCombantantStateTableViewCell" bundle:nil];
 
-        //cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
-        //UIViewController *temporaryController = [[UIViewController alloc] initWithNibName:@"CombatantStateTableViewCell" bundle:nil];
-        
-        // Grab a pointer to the custom cell.
-//        cell = (CombatantStateTableViewCell *) temporaryController.view;
-        
-        // Release the temporary UIViewController.
+            // Grab a pointer to the custom cell.
+            cell = (CombatantStateTableViewCell *) temporaryController.view;
+
+            // Release the temporary UIViewController.
 //        [temporaryController release];
-        
-        cell = [[CombatantStateTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        cell.opaque = YES;
-        
-        UITextField *nameField = [[UITextField alloc] initWithFrame:CGRectMake(100, 20, 250, 31)];
-        nameField.font = [UIFont systemFontOfSize:16.0];
-        nameField.textAlignment = UITextAlignmentLeft;
-        nameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        nameField.textColor = [UIColor blackColor];
-        nameField.placeholder = @"Name";
-        nameField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        nameField.borderStyle = UITextBorderStyleRoundedRect;
-        nameField.opaque = YES;
-        cell.nameField = nameField;
-        [nameField addTarget:cell action:@selector(nameFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
-        [cell addSubview:nameField];
+        }
+        else {
+            NSLog(@"creating new ipad cell...");
+            cell = [[CombatantStateTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell.opaque = YES;
 
-        UILabel *acLabel = [[UILabel alloc] initWithFrame:CGRectMake(298 + 63, 0, 40, 21)];
-        [self setLabelDefaults:acLabel];
-        acLabel.text = @"AC";
-        [cell addSubview:acLabel];
+            UITextField *nameField = [[UITextField alloc] initWithFrame:CGRectMake(100, 20, 250, 31)];
+            nameField.font = [UIFont systemFontOfSize:16.0];
+            nameField.textAlignment = UITextAlignmentLeft;
+            nameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+            nameField.textColor = [UIColor blackColor];
+            nameField.placeholder = @"Name";
+            nameField.clearButtonMode = UITextFieldViewModeWhileEditing;
+            nameField.borderStyle = UITextBorderStyleRoundedRect;
+            nameField.opaque = YES;
+            cell.nameField = nameField;
+            [nameField addTarget:cell action:@selector(nameFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
+            [cell addSubview:nameField];
 
-        UITextField *acField = [[UITextField alloc] initWithFrame:CGRectMake(297 + 63, 20, 43, 31)];
-        [self setTextFieldDefaults:acField forCell:cell];
-        cell.acField = acField;
-        acField.placeholder = @"AC";
-        [acField addTarget:cell action:@selector(acFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
-        [cell addSubview:acField];
+            UILabel *acLabel = [[UILabel alloc] initWithFrame:CGRectMake(298 + 63, 0, 40, 21)];
+            [self setLabelDefaults:acLabel];
+            acLabel.text = @"AC";
+            [cell addSubview:acLabel];
 
-        UILabel *fortLabel = [[UILabel alloc] initWithFrame:CGRectMake(348 + 63, 0, 40, 21)];
-        [self setLabelDefaults:fortLabel];
-        fortLabel.text = @"Fort";
-        [cell addSubview:fortLabel];
+            UITextField *acField = [[UITextField alloc] initWithFrame:CGRectMake(297 + 63, 20, 43, 31)];
+            [self setTextFieldDefaults:acField forCell:cell];
+            cell.acField = acField;
+            acField.placeholder = @"AC";
+            [acField addTarget:cell action:@selector(acFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
+            [cell addSubview:acField];
 
-        UITextField *fortField = [[UITextField alloc] initWithFrame:CGRectMake(347 + 63, 20, 43, 31)];
-        [self setTextFieldDefaults:fortField forCell:cell];
-        fortField.placeholder = @"Fort";
-        cell.fortField = fortField;
-        [fortField addTarget:cell action:@selector(fortitudeFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
-        [cell addSubview:fortField];
+            UILabel *fortLabel = [[UILabel alloc] initWithFrame:CGRectMake(348 + 63, 0, 40, 21)];
+            [self setLabelDefaults:fortLabel];
+            fortLabel.text = @"Fort";
+            [cell addSubview:fortLabel];
 
-        UILabel *reflexLabel = [[UILabel alloc] initWithFrame:CGRectMake(397 + 63, 0, 40, 21)];
-        [self setLabelDefaults:reflexLabel];
-        reflexLabel.text = @"Ref";
-        [cell addSubview:reflexLabel];
+            UITextField *fortField = [[UITextField alloc] initWithFrame:CGRectMake(347 + 63, 20, 43, 31)];
+            [self setTextFieldDefaults:fortField forCell:cell];
+            fortField.placeholder = @"Fort";
+            cell.fortField = fortField;
+            [fortField addTarget:cell action:@selector(fortitudeFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
+            [cell addSubview:fortField];
 
-        UITextField *reflexField = [[UITextField alloc] initWithFrame:CGRectMake(397 + 63, 20, 43, 31)];
-        [self setTextFieldDefaults:reflexField forCell:cell];
-        reflexField.placeholder = @"Ref";
-        cell.reflexField = reflexField;
-        [reflexField addTarget:cell action:@selector(reflexFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
-        [cell addSubview:reflexField];
+            UILabel *reflexLabel = [[UILabel alloc] initWithFrame:CGRectMake(397 + 63, 0, 40, 21)];
+            [self setLabelDefaults:reflexLabel];
+            reflexLabel.text = @"Ref";
+            [cell addSubview:reflexLabel];
 
-        UILabel *willLabel = [[UILabel alloc] initWithFrame:CGRectMake(447 + 63, 0, 40, 21)];
-        [self setLabelDefaults:willLabel];
-        willLabel.text = @"Will";
-        [cell addSubview:willLabel];
+            UITextField *reflexField = [[UITextField alloc] initWithFrame:CGRectMake(397 + 63, 20, 43, 31)];
+            [self setTextFieldDefaults:reflexField forCell:cell];
+            reflexField.placeholder = @"Ref";
+            cell.reflexField = reflexField;
+            [reflexField addTarget:cell action:@selector(reflexFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
+            [cell addSubview:reflexField];
 
-        UITextField *willField = [[UITextField alloc] initWithFrame:CGRectMake(447 + 63, 20, 43, 31)];
-        [self setTextFieldDefaults:willField forCell:cell];
-        willField.placeholder = @"Will";
-        cell.willField = willField;
-        [willField addTarget:cell action:@selector(willFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
-        [cell addSubview:willField];
+            UILabel *willLabel = [[UILabel alloc] initWithFrame:CGRectMake(447 + 63, 0, 40, 21)];
+            [self setLabelDefaults:willLabel];
+            willLabel.text = @"Will";
+            [cell addSubview:willLabel];
 
-        UILabel *maxHpLabel = [[UILabel alloc] initWithFrame:CGRectMake(135, 0, 44, 21)];
-        [self setLabelDefaults:maxHpLabel];
-        maxHpLabel.text = @"Max HP";
-        maxHpLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-        [cell addSubview:maxHpLabel];
+            UITextField *willField = [[UITextField alloc] initWithFrame:CGRectMake(447 + 63, 20, 43, 31)];
+            [self setTextFieldDefaults:willField forCell:cell];
+            willField.placeholder = @"Will";
+            cell.willField = willField;
+            [willField addTarget:cell action:@selector(willFieldChanged:) forControlEvents:UIControlEventEditingDidEnd];
+            [cell addSubview:willField];
 
-        UITextField *maxHpField = [[UITextField alloc] initWithFrame:CGRectMake(135, 20, 43, 31)];
-        [self setTextFieldDefaults:maxHpField forCell:cell];
-        maxHpField.placeholder = @"Max";
-        maxHpField.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-        cell.maxHpField = maxHpField;
-        [maxHpField addTarget:cell action:@selector(maxHpChanged:) forControlEvents:UIControlEventEditingDidEnd];
-        [cell addSubview:maxHpField];
+            UILabel *maxHpLabel = [[UILabel alloc] initWithFrame:CGRectMake(135, 0, 44, 21)];
+            [self setLabelDefaults:maxHpLabel];
+            maxHpLabel.text = @"Max HP";
+            maxHpLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+            [cell addSubview:maxHpLabel];
 
-        UILabel *hpLabel = [[UILabel alloc] initWithFrame:CGRectMake(178, 0, 60, 21)];
-        [self setLabelDefaults:hpLabel];
-        hpLabel.text = @"HP";
-        hpLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-        [cell addSubview:hpLabel];
+            UITextField *maxHpField = [[UITextField alloc] initWithFrame:CGRectMake(135, 20, 43, 31)];
+            [self setTextFieldDefaults:maxHpField forCell:cell];
+            maxHpField.placeholder = @"Max";
+            maxHpField.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+            cell.maxHpField = maxHpField;
+            [maxHpField addTarget:cell action:@selector(maxHpChanged:) forControlEvents:UIControlEventEditingDidEnd];
+            [cell addSubview:maxHpField];
 
-        UITextField *hpField = [[UITextField alloc] initWithFrame:CGRectMake(186, 20, 43, 31)];
-        [self setTextFieldDefaults:hpField forCell:cell];
-        hpField.placeholder = @"HP";
-        hpField.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-        hpField.borderStyle = UITextBorderStyleNone;
-        cell.hpField = hpField;
-        [hpField addTarget:cell action:@selector(hpChanged:) forControlEvents:UIControlEventEditingDidEnd];
-        [cell addSubview:hpField];
+            UILabel *hpLabel = [[UILabel alloc] initWithFrame:CGRectMake(178, 0, 60, 21)];
+            [self setLabelDefaults:hpLabel];
+            hpLabel.text = @"HP";
+            hpLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+            [cell addSubview:hpLabel];
 
-        MNEValueTrackingSlider* hpSlider = [[MNEValueTrackingSlider alloc] initWithFrame:CGRectMake(100, 50, 135, 30)];
-        cell.hpSlider = hpSlider;
-        hpSlider.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        hpSlider.continuous = NO;
-        hpSlider.opaque = YES;
-        [hpSlider addTarget:cell action:@selector(hpSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
-        [cell addSubview:hpSlider];
+            UITextField *hpField = [[UITextField alloc] initWithFrame:CGRectMake(186, 20, 43, 31)];
+            [self setTextFieldDefaults:hpField forCell:cell];
+            hpField.placeholder = @"HP";
+            hpField.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+            hpField.borderStyle = UITextBorderStyleNone;
+            cell.hpField = hpField;
+            [hpField addTarget:cell action:@selector(hpChanged:) forControlEvents:UIControlEventEditingDidEnd];
+            [cell addSubview:hpField];
+
+            MNEValueTrackingSlider *hpSlider = [[MNEValueTrackingSlider alloc] initWithFrame:CGRectMake(100, 50, 135, 30)];
+            cell.hpSlider = hpSlider;
+            hpSlider.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            hpSlider.continuous = NO;
+            hpSlider.opaque = YES;
+            [hpSlider addTarget:cell action:@selector(hpSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+            [cell addSubview:hpSlider];
+        }
 
     }
 
@@ -450,7 +500,7 @@
     else {
         combatantState = [self.inActiveCombatants objectAtIndex:indexPath.row];
     }
-    CombatantStateTableViewCell *combatantCell = (CombatantStateTableViewCell*) cell;
+    CombatantStateTableViewCell *combatantCell = (CombatantStateTableViewCell *) cell;
     combatantCell.nameField.text = combatantState.combatant.name;
     combatantCell.acField.text = [combatantState.combatant.armorClass stringValue];
     combatantCell.reflexField.text = [combatantState.combatant.reflex stringValue];
@@ -534,7 +584,6 @@
      [detailViewController release];
      */
 }
-
 
 
 @end

@@ -37,6 +37,7 @@
 		525D5A8B1432C2940009B5E5 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 525D5A891432C2940009B5E5 /* TPKeyboardAvoidingScrollView.m */; };
 		5265C4371437EF450041C51D /* MNEValueTrackingSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5265C4351437EF450041C51D /* MNEValueTrackingSlider.m */; };
 		52A45743142FB48B0039D774 /* Party.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A45742142FB48B0039D774 /* Party.m */; };
+		52FD1C7414E725BF009676D2 /* IPhoneCombantantStateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52FD1C7314E725BF009676D2 /* IPhoneCombantantStateTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		5265C4361437EF450041C51D /* MNEValueTrackingSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNEValueTrackingSlider.h; path = CombatTracker/MNEValueTrackingSlider.h; sourceTree = "<group>"; };
 		52A45741142FB48B0039D774 /* Party.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Party.h; sourceTree = "<group>"; };
 		52A45742142FB48B0039D774 /* Party.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Party.m; sourceTree = "<group>"; };
+		52FD1C7314E725BF009676D2 /* IPhoneCombantantStateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPhoneCombantantStateTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 		523319F8142E44A300BC558C /* CombatTracker */ = {
 			isa = PBXGroup;
 			children = (
+				52FD1C7314E725BF009676D2 /* IPhoneCombantantStateTableViewCell.xib */,
 				525D5A891432C2940009B5E5 /* TPKeyboardAvoidingScrollView.m */,
 				525D5A8A1432C2940009B5E5 /* TPKeyboardAvoidingScrollView.h */,
 				525D5A5F143024440009B5E5 /* CombatantState.h */,
@@ -292,6 +295,7 @@
 				52331A0F142E44A300BC558C /* DetailView.xib in Resources */,
 				525D5A46142FCB5E0009B5E5 /* EncounterViewController.xib in Resources */,
 				525D5A88143196CC0009B5E5 /* CombatantStateTableViewCell.xib in Resources */,
+				52FD1C7414E725BF009676D2 /* IPhoneCombantantStateTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,7 +406,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Watson (D3QJ9E88BV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Watson (D3QJ9E88BV)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -414,6 +419,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				PROVISIONING_PROFILE = "9B8E6AD4-2FEF-4C4B-BCF8-D5073907C038";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B8E6AD4-2FEF-4C4B-BCF8-D5073907C038";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -424,7 +431,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Watson (D3QJ9E88BV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Watson (D3QJ9E88BV)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -433,6 +441,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "9B8E6AD4-2FEF-4C4B-BCF8-D5073907C038";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B8E6AD4-2FEF-4C4B-BCF8-D5073907C038";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
@@ -443,11 +453,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Watson (D3QJ9E88BV)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CombatTracker/CombatTracker-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "CombatTracker/CombatTracker-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "AE075686-8745-47D5-9FA1-DCC7DE33BD8D";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -460,7 +474,9 @@
 				GCC_PREFIX_HEADER = "CombatTracker/CombatTracker-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "CombatTracker/CombatTracker-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
